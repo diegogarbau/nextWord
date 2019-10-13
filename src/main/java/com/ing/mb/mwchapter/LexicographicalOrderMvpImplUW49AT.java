@@ -1,10 +1,7 @@
 package com.ing.mb.mwchapter;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class LexicographicalOrderMvpImplUW49AT implements LexicographicalOrder {
 
@@ -15,47 +12,48 @@ public class LexicographicalOrderMvpImplUW49AT implements LexicographicalOrder {
 
 
     private Optional<String> calcNextLargerWord(String word) {
-        return IntStream.rangeClosed(0, word.length() - 1)
-            .mapToObj(i -> calcWord(word, i).orElse(word))
-            .filter(s -> !s.equals(word))
-            .findFirst();
+        String next = getStringFromASCIIArray(nextPermutation(getArrayFromString(word)));
+        return (next.equals(word))? Optional.empty():Optional.of(next);
     }
 
-    private Optional<String> calcWord(String word, int i) {
-        return IntStream.rangeClosed(0, word.length() - 1)
-            .mapToObj(j ->
-                swapIfGreater(word, i, lookForMinGreater(word, i)))
-            .filter(s -> !s.equals(word))
-            .findFirst();
-    }
+    public static int[] nextPermutation(int[] array) {
+        // Find non-increasing suffix
+        int i = array.length - 1;
+        while (i > 0 && array[i - 1] >= array[i])
+            i--;
+        if (i <= 0)
+            return array;
+        // Find successor to pivot
+        int j = array.length - 1;
+        while (array[j] <= array[i - 1])
+            j--;
+        int temp = array[i - 1];
+        array[i - 1] = array[j];
+        array[j] = temp;
 
-    private int lookForMinGreater(String word, int i) {
-        List<Integer> list = getListFromString(word);
-        return IntStream.rangeClosed(i, list.size() - 1)
-            .filter(j -> list.get(j) > list.get(i))
-            .min().orElse(i);
-    }
-
-    private String swapIfGreater(String word, int i, int j) {
-        List<Integer> list = getListFromString(word);
-        int pointerI = word.length() - 1 - i;
-        int pointerJ = word.length() - 1 - j;
-        if (list.get(pointerI) > list.get(pointerJ)) {
-            Collections.swap(list, pointerI, pointerJ);
+        // Reverse suffix
+        j = array.length - 1;
+        while (i < j) {
+            temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+            i++;
+            j--;
         }
-        return getStringFromASCIIList(list);
+        return array;
     }
 
-    private String getStringFromASCIIList(List<Integer> list) {
-        return list.stream()
-            .map(k -> (char) k.intValue())
-            .map(Object::toString)
-            .reduce("", String::concat);
-    }
-
-    private List<Integer> getListFromString(String word) {
+    private static int[] getArrayFromString(String word) {
         return word.chars()
-            .boxed()
-            .collect(Collectors.toList());
+                .toArray();
     }
+
+    private String getStringFromASCIIArray(int[] arry) {
+        return Arrays.stream(arry)
+                .boxed()
+                .map(k -> (char) k.intValue())
+                .map(Object::toString)
+                .reduce("", String::concat);
+    }
+
 }
