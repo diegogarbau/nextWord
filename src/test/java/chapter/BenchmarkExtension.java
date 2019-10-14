@@ -1,4 +1,4 @@
-package com.ing.mb.mwchapter;
+package chapter;
 
 import static java.lang.System.currentTimeMillis;
 import static org.junit.platform.commons.support.AnnotationSupport.isAnnotated;

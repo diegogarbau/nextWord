@@ -1,4 +1,4 @@
-package com.ing.mb.mwchapter;
+package chapter;
 
 public class Msg {
 

@@ -1,4 +1,4 @@
-package com.ing.mb.mwchapter;
+package chapter;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 

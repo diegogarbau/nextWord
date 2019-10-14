@@ -1,10 +1,10 @@
-package com.ing.mb.mwchapter;
+package chapter;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-public class LexicographicalOrderMvpImplUW49AT implements LexicographicalOrder {
+public class LexicographicalOrderMvpImplDGarbau implements LexicographicalOrder {
 
     @Override
     public Optional<String> nextLargerWord(String word) {

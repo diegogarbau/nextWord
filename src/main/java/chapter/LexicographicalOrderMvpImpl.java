@@ -1,4 +1,4 @@
-package com.ing.mb.mwchapter;
+package chapter;
 
 import java.util.Map;
 import java.util.Optional;
