@@ -8,11 +8,10 @@ public class LexicographicalOrderMvpImplDGarbau implements LexicographicalOrder 
     public Optional<String> nextLargerWord(String word) {
         int[] array = word.chars().toArray();
         int i = array.length - 1;
-        int j = array.length - 1;
         while (i > 0 && array[i - 1] >= array[i])
             i--;
         if (i <= 0) return Optional.empty();
-
+        int j = array.length - 1;
         while (array[j] <= array[i - 1])
             j--;
         swap(array, i - 1, j);
@@ -32,6 +31,7 @@ public class LexicographicalOrderMvpImplDGarbau implements LexicographicalOrder 
         array[i] = array[j];
         array[j] = temp;
     }
+
     private String getStringFromASCIIArray(int[] array) {
         return Arrays.stream(array)
                 .boxed()
